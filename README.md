@@ -1,141 +1,126 @@
-SQL_Swiggy_Sales
-Swiggy Food Delivery Analytics — End-to-End SQL Pipeline
-Project Overview
+# 🍔 SQL Swiggy Sales Analysis  
+### End-to-End Data Engineering & Business Intelligence Project
 
-This project demonstrates a complete data engineering and analytics workflow using a Swiggy food delivery dataset.
-The pipeline transforms raw, unstructured transactional data into a Dimensional Model (Star Schema) optimized for high-performance Business Intelligence (BI) reporting and analytical use cases.
+---
 
-The focus is on data quality, modeling correctness, and analytical depth, simulating a real-world analytics pipeline commonly found in production environments.
+## 📌 Project Overview
 
-Project Objectives
+This project demonstrates a **complete SQL-based data analytics pipeline** using a Swiggy food delivery dataset.  
+The goal is to transform raw transactional data into a **clean, scalable Star Schema** and extract **business-ready insights** for decision-making.
 
-Data Quality Assurance
-Perform systematic data validation, null handling, deduplication, and outlier treatment.
+The project mirrors real-world **Data Analyst / BI workflows**, including data cleaning, modeling, KPI design, and analytical reporting.
 
-Dimensional Modeling
-Design and implement a Star Schema with clear separation of facts and dimensions.
+---
 
-KPI Development
-Compute core business metrics such as Revenue, Average Order Value (AOV), and Order Volume.
+## 🎯 Business Objectives
 
-Business Insight Generation
-Identify growth opportunities, customer behavior patterns, and performance drivers across time, geography, and restaurants.
+- Ensure **data quality and consistency** through systematic cleaning and validation  
+- Design a **Dimensional Model (Star Schema)** optimized for analytics  
+- Build **core KPIs** used by food delivery platforms  
+- Identify **growth opportunities**, demand patterns, and restaurant performance  
 
-Data Architecture — Star Schema
+---
 
-To ensure query efficiency, scalability, and analytical clarity, the raw dataset was decomposed into a Star Schema.
+## 🏗️ Data Architecture — Star Schema
 
-Fact Table
+To improve query performance and analytical clarity, the raw dataset was decomposed into a **Star Schema**.
 
-fact_swiggy_orders
-Stores transactional measures and foreign keys:
+### 🟡 Fact Table
+- **`fact_swiggy_orders`**
+  - Transactional metrics: `Price_INR`, `Rating`, `Rating_Count`
+  - Foreign keys to all dimensions
 
-Order price
+### 🔵 Dimension Tables
+- **`dim_date`** – Year, Month, Quarter, Day of Week  
+- **`dim_location`** – State, City, Area  
+- **`dim_restaurant`** – Restaurant metadata  
+- **`dim_category`** – Cuisine / food category  
+- **`dim_dish`** – Individual dish details  
 
-Ratings
+This structure enables **fast aggregations, flexible slicing, and BI tool compatibility**.
 
-Order identifiers
+---
 
-Surrogate dimension keys
+## 🛠️ SQL Workflow Breakdown
 
-Dimension Tables
+### 1️⃣ Data Cleaning & Quality Assurance
+- Null and blank value detection  
+- Deduplication using `ROW_NUMBER()` and CTEs  
+- Outlier handling for invalid prices and ratings  
+- Data type normalization for financial precision  
 
-dim_date
-Year, Month, Month Name, Quarter, Day of Week
+### 2️⃣ ETL Process (Extract, Transform, Load)
+- Surrogate keys created with `IDENTITY`  
+- Enriched date dimension (Month name, Quarter, Weekday)  
+- Referential integrity enforced with controlled joins  
+- Only fully valid records loaded into the fact table  
 
-dim_location
-State, City, Location
+### 3️⃣ Business Intelligence & Analytics
+- Revenue & Average Order Value (AOV) analysis  
+- City-level and restaurant-level performance ranking  
+- Time-based trend analysis (daily, monthly, quarterly)  
+- Market expansion opportunity detection  
 
-dim_restaurant
-Restaurant-level attributes
+---
 
-dim_category
-Cuisine and category classifications
+## 📊 Key Insights Generated
 
-dim_dish
-Dish-level details
+- 📍 **Geographic opportunities**: Cities with high AOV but moderate order volume  
+- 📈 **Temporal trends**: Peak ordering days and monthly growth patterns  
+- 🍽️ **Restaurant scorecards**: Revenue, volume, and rating consistency  
+- 💰 **Pricing behavior**: Revenue distribution across price buckets  
 
-This structure enables fast aggregations, clean joins, and flexible slicing across analytical dimensions.
+---
 
-SQL Workflow Breakdown
-1. Data Cleaning & Quality Assurance
+## 🧠 SQL Techniques Applied
 
-Before modeling, the dataset underwent a structured auditing process:
+- **CTEs (Common Table Expressions)** for modular, readable logic  
+- **Window Functions**:
+  - `ROW_NUMBER()` for deduplication  
+  - `LAG()` for Month-over-Month growth analysis  
+- **Advanced Aggregations** with `GROUP BY` and `HAVING`  
+- **Data Type Casting** using `CAST` / `CONVERT` for accuracy  
+- **Pagination & Filtering** with `OFFSET / FETCH`  
 
-Null and Blank Detection
-Identified missing values in key analytical fields.
+---
 
-Deduplication
-Used ROW_NUMBER() with CTEs to remove duplicate records while preserving data lineage.
+## 🚀 How to Run the Project
 
-Outlier & Invalid Value Handling
-Normalized invalid ratings and price anomalies to ensure analytical accuracy.
+**Environment:** Microsoft SQL Server (T-SQL)
 
-2. ETL Process (Extract, Transform, Load)
+### Execution Order
+1. **Data Cleaning & Profiling**  
+2. **Dimensional Modeling (Star Schema creation)**  
+3. **ETL Load into Fact Table**  
+4. **KPI & BI Analysis Queries**  
+5. **Advanced Business Insights**
 
-Surrogate Keys
-Generated using IDENTITY columns for efficient indexing and joins.
+---
 
-Temporal Enrichment
-Enhanced the date dimension with derived attributes such as Month Name and Quarter.
+## 📂 Repository Structure
 
-Data Integrity Enforcement
-Applied INNER JOINs during the load phase to ensure only fully dimensional records populate the fact table.
+```text
+├── 01_data_cleaning.sql
+├── 02_dimensional_model.sql
+├── 03_etl_load.sql
+├── 04_kpi_analysis.sql
+├── 05_advanced_insights.sql
+└── README.md
 
-3. Business Intelligence & Analytics Layer
+👤 Author
 
-The analytical layer delivers actionable insights, including:
+David Stocco
+📅 February 2026
+🔗 GitHub https://github.com/davidstocco2024-cell
 
-Geographic Opportunity Analysis
-Identification of under-served cities with high AOV and moderate order volume.
+🔗 LinkedIn https://www.linkedin.com/in/david-stocco-35ba40278/
 
-Customer Spending Patterns
-Revenue segmentation using price buckets to support pricing and promotion strategies.
+📢 Final Notes
 
-Temporal Trend Analysis
-Detection of peak ordering days and Month-over-Month growth using window functions.
+This project reflects real-world SQL analytics, bridging data engineering and business intelligence.
+Designed to showcase clean code, scalable modeling, and analytical depth.
 
-Restaurant Performance Scorecards
-Vendor ranking based on revenue, order volume, and rating consistency.
+Feedback and collaboration ideas are welcome.
 
-Key SQL Techniques Used
-
-Window Functions
-ROW_NUMBER() for deduplication
-LAG() for Month-over-Month growth analysis
-
-CTEs (Common Table Expressions)
-Modular, readable, and maintainable query structure
-
-Advanced Aggregations
-Complex GROUP BY and HAVING logic for statistically meaningful insights
-
-Data Type Management
-Strategic use of CAST and CONVERT to preserve financial precision
-
-Pagination & Filtering
-OFFSET / FETCH for standards-compliant result pagination
-
-How to Run the Project
-
-Environment:
-Microsoft SQL Server (T-SQL)
-
-Execution Order:
-
-Run the Data Cleaning & QA scripts on the raw landing table
-
-Execute the Dimensional Modeling scripts to create the schema
-
-Load the Fact Table via the ETL queries
-
-Run BI & KPI queries for high-level metrics
-
-Execute Advanced Analytical Queries for deeper insights
-
-Author & Project Info
-
-Author: David Stocco
-Date: February 10, 2026
 Project Type: SQL Data Analysis & Modeling Portfolio
 Focus Areas: Data Quality, Dimensional Modeling, Business Intelligence
